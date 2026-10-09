@@ -27,7 +27,7 @@ It runs **on the domain controller** and requires elevated privileges
 | `samba_dc_backup_domain_username` | — | username for authenticated online backups |
 | `samba_dc_backup_domain_password` | — | password; required when a username is given |
 | `samba_dc_backup_files` | `true` | include a `tar.gz` of `samba_dc_backup_files_paths` |
-| `samba_dc_backup_files_paths` | `[/home]` | paths to archive |
+| `samba_dc_backup_files_paths` | `[/home, /srv/samba]` | paths to archive; `/srv/samba` holds the home directories and shared folders |
 
 The target directory is created with mode `0700` and the files archive with mode
 `0600`, both owned by root. The credentials are handed to `samba-tool` through
@@ -52,7 +52,7 @@ to run unless `samba_dc_backup_restore_confirm` is `true`.
 ## Examples
 
 ```yaml
-# Offline domain backup plus /home
+# Offline domain backup plus /home and /srv/samba
 - import_role:
     name: lineadicomando.samba_dc.samba_dc_backup
   vars:

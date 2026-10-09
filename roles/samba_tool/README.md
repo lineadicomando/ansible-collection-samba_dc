@@ -47,7 +47,8 @@ It runs **on the domain controller** and requires elevated privileges
   case-insensitively as AD does.
 - **home**: the LDAP attributes are read back and only rewritten when they
   differ; the SMB share parameters converge to
-  `samba_tool_home_share_params`.
+  `samba_tool_home_share_params`, and the path of an existing share to
+  `home_base`.
 - **share**: delegated to the
   [`samba_share`](../../plugins/modules/samba_share.py) module, with check_mode
   and diff. Access lists are compared regardless of order and case, the ACL of
@@ -63,10 +64,17 @@ attributes through `ldbmodify`, and ensures the SMB share exists.
 | Argument | Default | Description |
 |----------|---------|-------------|
 | `name` | — | sAMAccountName (required) |
-| `home_base` | `/home/samba` | base path for home directories |
+| `home_base` | `/srv/samba/home` | base path for home directories, the one cockpit-samba-dc uses |
 | `home_drive` | `H:` | Windows drive letter mapping |
 | `share_name` | `home` | SMB share name |
 | `home_group` | `Domain Users` | group owning the directory |
+
+The share serves one base directory: when it already exists on another path,
+`provision` repoints it at `home_base`, as cockpit-samba-dc does with its own.
+Home directories are not moved. Up to collection 0.5.0 the default was
+`/home/samba`: on a DC provisioned then, move the directories to
+`/srv/samba/home` before the next `provision`, or keep passing
+`home_base: /home/samba` and do not provision homes from Cockpit.
 
 The directory is owned by the domain account, so domain accounts must be
 resolvable through NSS. The `samba_dc_build` role configures this by adding

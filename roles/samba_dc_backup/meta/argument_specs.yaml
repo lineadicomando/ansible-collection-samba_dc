@@ -46,7 +46,7 @@ argument_specs:
         description: List of filesystem paths to include in the files archive.
         type: list
         elements: str
-        default: [/home]
+        default: [/home, /srv/samba]
 
       # ── Restore ─────────────────────────────────────────────────────────────
       samba_dc_backup_restore_backup_file:

@@ -16,6 +16,7 @@ samba_dc_backup_domain_password: ~          # credentials (online only, optional
 samba_dc_backup_files: true
 samba_dc_backup_files_paths:        # paths to archive
   - /home
+  - /srv/samba                      # homes and shared folders of samba_tool and cockpit-samba-dc
 
 # ── Restore options ───────────────────────────────────────────────────────────
 samba_dc_backup_restore_backup_file: ~      # archive from a domain backup (required)

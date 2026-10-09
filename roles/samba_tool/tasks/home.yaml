@@ -11,7 +11,8 @@
 #   name          : sAMAccountName of the user
 #
 # Optional args:
-#   home_base     : base path for home directories (default: /home/samba)
+#   home_base     : base path for home directories (default: /srv/samba/home,
+#                   the directory cockpit-samba-dc uses)
 #   home_drive    : Windows drive letter mapping  (default: H:)
 #   share_name    : SMB share name               (default: home)
 #   home_group    : group owning the directory   (default: Domain Users)
@@ -29,7 +30,7 @@
 
 - name: Set home defaults
   ansible.builtin.set_fact:
-    _samba_tool_home_base: "{{ samba_tool_args.home_base | default('/home/samba') }}"
+    _samba_tool_home_base: "{{ samba_tool_args.home_base | default('/srv/samba/home') }}"
     _samba_tool_home_drive: "{{ samba_tool_args.home_drive | default('H:') }}"
     _samba_tool_share_name: "{{ samba_tool_args.share_name | default('home') }}"
     _samba_tool_home_group: "{{ samba_tool_args.home_group | default('Domain Users') }}"
@@ -182,6 +183,25 @@
           - writeable=y
           - guest_ok=n
       when: _samba_tool_share_check.rc != 0
+      changed_when: true
+
+    # cockpit-samba-dc repoints an existing share at its own base directory, and
+    # so does this: a share left on another path would serve a directory the
+    # home just created is not in.
+    - name: Read the path of the existing SMB share
+      ansible.builtin.command:
+        argv: ["net", "conf", "getparm", "{{ _samba_tool_share_name }}", "path"]
+      register: _samba_tool_share_path
+      when: _samba_tool_share_check.rc == 0
+      changed_when: false
+      failed_when: false
+
+    - name: Point the existing SMB share at the home base directory
+      ansible.builtin.command:
+        argv: ["net", "conf", "setparm", "{{ _samba_tool_share_name }}", "path", "{{ _samba_tool_home_base }}"]
+      when:
+        - _samba_tool_share_check.rc == 0
+        - _samba_tool_share_path.stdout | default('') | trim != _samba_tool_home_base
       changed_when: true
 
     # Applied unconditionally so that a pre-existing share converges to the
