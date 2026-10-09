@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from __future__ import annotations
 
-from ansible_collections.lineadicomando.samba_ad_dc.plugins.modules.samba_tool_user import (
+from ansible_collections.lineadicomando.samba_dc.plugins.modules.samba_tool_user import (
     _UAC_ACCOUNTDISABLE,
     SambaUser,
     _parse_ldif,

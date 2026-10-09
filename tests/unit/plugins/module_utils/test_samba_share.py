@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 from __future__ import annotations
 
-from ansible_collections.lineadicomando.samba_ad_dc.plugins.module_utils.samba_share import (
+from ansible_collections.lineadicomando.samba_dc.plugins.module_utils.samba_share import (
     access_key,
     build_drive_xml,
     build_drives_xml,
@@ -24,7 +24,7 @@ from ansible_collections.lineadicomando.samba_ad_dc.plugins.module_utils.samba_s
     share_access,
     validate_share_name,
 )
-from ansible_collections.lineadicomando.samba_ad_dc.plugins.modules.samba_share import merge_access
+from ansible_collections.lineadicomando.samba_dc.plugins.modules.samba_share import merge_access
 
 # The fixture of cockpit-samba-ad-dc test/shares.test.ts: both sides must read
 # the same registry the same way.

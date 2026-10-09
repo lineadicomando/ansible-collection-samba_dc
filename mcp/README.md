@@ -7,9 +7,9 @@ to `ansible-playbook` by hand.
 
 | Tool | Playbook | What it manages |
 |------|----------|-----------------|
-| `samba` | `lineadicomando.samba_ad_dc.samba` | users, groups, computers, OUs, home directories, shared folders |
-| `samba_dc_backup` | `lineadicomando.samba_ad_dc.samba_dc_backup` | domain backup (online/offline) and destructive restore |
-| `samba_win_status` | `lineadicomando.samba_ad_dc.samba_win_status` | domain/workgroup membership of Windows hosts (read-only) |
+| `samba` | `lineadicomando.samba_dc.samba` | users, groups, computers, OUs, home directories, shared folders |
+| `samba_dc_backup` | `lineadicomando.samba_dc.samba_dc_backup` | domain backup (online/offline) and destructive restore |
+| `samba_win_status` | `lineadicomando.samba_dc.samba_win_status` | domain/workgroup membership of Windows hosts (read-only) |
 
 Every tool accepts `preview: true`, which returns the `ansible-playbook` command
 line without running it. Use it before any destructive action.
@@ -45,9 +45,9 @@ Without `ANSIBLE_MCP_INVENTORY`, the `inventory` argument of each tool selects
 ```json
 {
   "mcpServers": {
-    "samba-ad-dc": {
+    "samba-dc": {
       "command": "python3",
-      "args": ["/path/to/ansible-collection-samba_ad_dc/mcp/server.py"],
+      "args": ["/path/to/ansible-collection-samba_dc/mcp/server.py"],
       "env": {
         "ANSIBLE_PROJECT_ROOT": "/path/to/your/ansible/project",
         "ANSIBLE_MCP_INVENTORY": "/path/to/your/ansible/project/inventory.yaml"

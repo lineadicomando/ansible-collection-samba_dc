@@ -1,6 +1,6 @@
 namespace: lineadicomando
-name: samba_ad_dc
-version: 0.4.0
+name: samba_dc
+version: 0.5.0
 readme: README.md
 authors:
   - Alessandro Gagliano <alessandro.gagliano@lineadicomando.it>
@@ -19,9 +19,9 @@ tags:
   - cockpit
   - windows
   - debian
-repository: https://github.com/lineadicomando/ansible-collection-samba_ad_dc
-homepage: https://github.com/lineadicomando/ansible-collection-samba_ad_dc
-issues: https://github.com/lineadicomando/ansible-collection-samba_ad_dc/issues
+repository: https://github.com/lineadicomando/ansible-collection-samba_dc
+homepage: https://github.com/lineadicomando/ansible-collection-samba_dc
+issues: https://github.com/lineadicomando/ansible-collection-samba_dc/issues
 
 dependencies:
   community.general: ">=7.0.0"

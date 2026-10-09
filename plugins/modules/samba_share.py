@@ -136,7 +136,7 @@ notes:
 
 EXAMPLES = r"""
 - name: Share a folder, read-write for teachers and read-only for students
-  lineadicomando.samba_ad_dc.samba_share:
+  lineadicomando.samba_dc.samba_share:
     name: Materiali
     comment: Class materials
     access:
@@ -147,7 +147,7 @@ EXAMPLES = r"""
   become: true
 
 - name: Give one more user write access, keeping the others
-  lineadicomando.samba_ad_dc.samba_share:
+  lineadicomando.samba_dc.samba_share:
     name: Materiali
     access_mode: append
     access:
@@ -155,13 +155,13 @@ EXAMPLES = r"""
   become: true
 
 - name: Stop mapping the share as a drive
-  lineadicomando.samba_ad_dc.samba_share:
+  lineadicomando.samba_dc.samba_share:
     name: Materiali
     drive_letter: ""
   become: true
 
 - name: Delete the share and its data
-  lineadicomando.samba_ad_dc.samba_share:
+  lineadicomando.samba_dc.samba_share:
     name: Materiali
     state: absent
     delete_data: true
@@ -213,7 +213,7 @@ commands:
 import os
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.lineadicomando.samba_ad_dc.plugins.module_utils.samba_share import (
+from ansible_collections.lineadicomando.samba_dc.plugins.module_utils.samba_share import (
     SambaShares,
     access_key,
     format_user_list,

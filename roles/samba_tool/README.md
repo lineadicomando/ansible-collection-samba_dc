@@ -113,7 +113,7 @@ existing share; an existing drive mapping follows access list changes.
 ```yaml
 # Create a user
 - import_role:
-    name: lineadicomando.samba_ad_dc.samba_tool
+    name: lineadicomando.samba_dc.samba_tool
   vars:
     samba_tool_object: user
     samba_tool_action: create
@@ -125,7 +125,7 @@ existing share; an existing drive mapping follows access list changes.
 
 # Add members to a group (only the missing ones)
 - import_role:
-    name: lineadicomando.samba_ad_dc.samba_tool
+    name: lineadicomando.samba_dc.samba_tool
   vars:
     samba_tool_object: group
     samba_tool_action: addmembers
@@ -135,7 +135,7 @@ existing share; an existing drive mapping follows access list changes.
 
 # Provision a home directory
 - import_role:
-    name: lineadicomando.samba_ad_dc.samba_tool
+    name: lineadicomando.samba_dc.samba_tool
   vars:
     samba_tool_object: home
     samba_tool_action: provision
@@ -146,7 +146,7 @@ existing share; an existing drive mapping follows access list changes.
 ```yaml
 # Share a folder: read-write for teachers, read-only for students, drive M:
 - import_role:
-    name: lineadicomando.samba_ad_dc.samba_tool
+    name: lineadicomando.samba_dc.samba_tool
   vars:
     samba_tool_object: share
     samba_tool_action: create
@@ -161,7 +161,7 @@ existing share; an existing drive mapping follows access list changes.
 Or via the FQCN playbook shipped with the collection:
 
 ```bash
-ansible-playbook lineadicomando.samba_ad_dc.samba \
+ansible-playbook lineadicomando.samba_dc.samba \
   -e '{"target_hosts":"dc","samba_tool_object":"user","samba_tool_action":"create",
        "samba_tool_args":{"name":"alice","password":"..."}}'
 ```

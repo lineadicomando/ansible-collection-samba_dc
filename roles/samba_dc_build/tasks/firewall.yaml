@@ -12,7 +12,7 @@
     mode: "0640"
     backup: true
     validate: /usr/sbin/nft -c -f %s
-  notify: samba_ad_dc reload nftables
+  notify: samba_dc reload nftables
 
 - name: Enables the firewall service
   ansible.builtin.systemd:

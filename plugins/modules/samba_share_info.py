@@ -11,7 +11,7 @@ short_description: List the shared folders of a Samba AD DC
 version_added: "0.5.0"
 description:
   - Returns the shared folders managed with the
-    M(lineadicomando.samba_ad_dc.samba_share) module or the cockpit-samba-ad-dc
+    M(lineadicomando.samba_dc.samba_share) module or the cockpit-samba-ad-dc
     Cockpit plugin, that is the registry shares whose path lies under
     O(shares_dir), with their access list and drive mapping.
   - Runs on the domain controller itself and requires elevated privileges
@@ -38,12 +38,12 @@ notes:
 
 EXAMPLES = r"""
 - name: List the shared folders
-  lineadicomando.samba_ad_dc.samba_share_info:
+  lineadicomando.samba_dc.samba_share_info:
   become: true
   register: result
 
 - name: Read one share
-  lineadicomando.samba_ad_dc.samba_share_info:
+  lineadicomando.samba_dc.samba_share_info:
     name: Materiali
   become: true
   register: result
@@ -87,7 +87,7 @@ shares:
 """
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.lineadicomando.samba_ad_dc.plugins.module_utils.samba_share import SambaShares
+from ansible_collections.lineadicomando.samba_dc.plugins.module_utils.samba_share import SambaShares
 
 
 def run_module():

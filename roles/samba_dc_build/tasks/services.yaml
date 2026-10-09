@@ -36,7 +36,7 @@
     group: root
     mode: "0644"
     backup: true
-  notify: samba_ad_dc restart chrony
+  notify: samba_dc restart chrony
 
 - name: Set owner and permissions for /var/lib/samba/ntp_signd
   ansible.builtin.file:

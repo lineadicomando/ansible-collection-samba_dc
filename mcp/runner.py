@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""Command builders and runner backing the samba_ad_dc MCP tools.
+"""Command builders and runner backing the samba_dc MCP tools.
 
 Configuration comes from the environment:
   ANSIBLE_PROJECT_ROOT  (required) directory the playbooks are run from
@@ -18,9 +18,9 @@ from runlog import run_logged
 
 # Playbooks shipped by the collection, keyed by MCP tool name.
 PLAYBOOKS = {
-    "samba": "lineadicomando.samba_ad_dc.samba",
-    "samba_dc_backup": "lineadicomando.samba_ad_dc.samba_dc_backup",
-    "samba_win_status": "lineadicomando.samba_ad_dc.samba_win_status",
+    "samba": "lineadicomando.samba_dc.samba",
+    "samba_dc_backup": "lineadicomando.samba_dc.samba_dc_backup",
+    "samba_win_status": "lineadicomando.samba_dc.samba_win_status",
 }
 
 DEFAULT_TIMEOUT = 900

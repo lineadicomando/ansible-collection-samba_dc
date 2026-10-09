@@ -4,7 +4,7 @@
 # module checks whether the account exists and the membership is reconciled
 # against the current member list.
 - name: Create admin user
-  lineadicomando.samba_ad_dc.samba_tool_user:
+  lineadicomando.samba_dc.samba_tool_user:
     name: "{{ samba_dc_build_administrator_username }}"
     password: "{{ samba_dc_build_administrator_passwd }}"
     state: present

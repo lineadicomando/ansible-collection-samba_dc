@@ -39,7 +39,7 @@
 
 - name: Mutating user operations
   when: samba_tool_action not in ['list', 'show']
-  lineadicomando.samba_ad_dc.samba_tool_user:
+  lineadicomando.samba_dc.samba_tool_user:
     name: "{{ samba_tool_args.name }}"
     state: "{{ 'absent' if samba_tool_action in ['delete', 'absent'] else 'present' }}"
     password: "{{ samba_tool_args.password | default(omit) }}"

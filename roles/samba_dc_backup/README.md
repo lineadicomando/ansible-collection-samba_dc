@@ -54,14 +54,14 @@ to run unless `samba_dc_backup_restore_confirm` is `true`.
 ```yaml
 # Offline domain backup plus /home
 - import_role:
-    name: lineadicomando.samba_ad_dc.samba_dc_backup
+    name: lineadicomando.samba_dc.samba_dc_backup
   vars:
     samba_dc_backup_action: backup
     samba_dc_backup_targetdir: /srv/samba-backup
 
 # Domain only, online, authenticated
 - import_role:
-    name: lineadicomando.samba_ad_dc.samba_dc_backup
+    name: lineadicomando.samba_dc.samba_dc_backup
   vars:
     samba_dc_backup_action: backup
     samba_dc_backup_targetdir: /srv/samba-backup
@@ -74,7 +74,7 @@ to run unless `samba_dc_backup_restore_confirm` is `true`.
 Or via the FQCN playbook shipped with the collection:
 
 ```bash
-ansible-playbook lineadicomando.samba_ad_dc.samba_dc_backup \
+ansible-playbook lineadicomando.samba_dc.samba_dc_backup \
   -e '{"target_hosts":"dc","samba_dc_backup_action":"backup",
        "samba_dc_backup_targetdir":"/srv/samba-backup"}'
 ```

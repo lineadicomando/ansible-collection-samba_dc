@@ -115,7 +115,7 @@ notes:
 
 EXAMPLES = r"""
 - name: Ensure a user exists
-  lineadicomando.samba_ad_dc.samba_tool_user:
+  lineadicomando.samba_dc.samba_tool_user:
     name: alice
     password: "{{ vault_alice_password }}"
     given_name: Alice
@@ -124,26 +124,26 @@ EXAMPLES = r"""
   become: true
 
 - name: Disable a user
-  lineadicomando.samba_ad_dc.samba_tool_user:
+  lineadicomando.samba_dc.samba_tool_user:
     name: bob
     enabled: false
   become: true
 
 - name: Rotate a password on every run
-  lineadicomando.samba_ad_dc.samba_tool_user:
+  lineadicomando.samba_dc.samba_tool_user:
     name: svc-backup
     password: "{{ vault_svc_password }}"
     update_password: always
   become: true
 
 - name: Remove a user
-  lineadicomando.samba_ad_dc.samba_tool_user:
+  lineadicomando.samba_dc.samba_tool_user:
     name: olduser
     state: absent
   become: true
 
 - name: Set primary group of an existing user
-  lineadicomando.samba_ad_dc.samba_tool_user:
+  lineadicomando.samba_dc.samba_tool_user:
     name: alice
     primary_group: Studenti
   become: true

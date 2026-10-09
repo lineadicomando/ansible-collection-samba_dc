@@ -1,9 +1,9 @@
-# lineadicomando.samba_ad_dc
+# lineadicomando.samba_dc
 
-[![GitHub tag](https://img.shields.io/github/v/tag/lineadicomando/ansible-collection-samba_ad_dc?label=version)](https://github.com/lineadicomando/ansible-collection-samba_ad_dc/tags)
+[![GitHub tag](https://img.shields.io/github/v/tag/lineadicomando/ansible-collection-samba_dc?label=version)](https://github.com/lineadicomando/ansible-collection-samba_dc/tags)
 [![License: GPL v3](https://img.shields.io/badge/license-GPLv3-blue)](./LICENSE)
-[![CI](https://github.com/lineadicomando/ansible-collection-samba_ad_dc/actions/workflows/ci.yml/badge.svg)](https://github.com/lineadicomando/ansible-collection-samba_ad_dc/actions/workflows/ci.yml)
-[![GitHub issues](https://badgen.net/github/open-issues/lineadicomando/ansible-collection-samba_ad_dc)](https://github.com/lineadicomando/ansible-collection-samba_ad_dc/issues)
+[![CI](https://github.com/lineadicomando/ansible-collection-samba_dc/actions/workflows/ci.yml/badge.svg)](https://github.com/lineadicomando/ansible-collection-samba_dc/actions/workflows/ci.yml)
+[![GitHub issues](https://badgen.net/github/open-issues/lineadicomando/ansible-collection-samba_dc)](https://github.com/lineadicomando/ansible-collection-samba_dc/issues)
 
 Ansible collection that provisions a **Samba 4 Active Directory Domain Controller** on Debian Trixie and makes it manageable from a browser — no CLI required for day-to-day operations.
 
@@ -87,7 +87,7 @@ Read-only actions (`list`, `show`, `listmembers`, `listobjects`) never change st
 ## Installation
 
 ```bash
-ansible-galaxy collection install lineadicomando.samba_ad_dc
+ansible-galaxy collection install lineadicomando.samba_dc
 ```
 
 ## Inventory example
@@ -118,24 +118,24 @@ samba_dc_build_administrator_passwd: !vault |
   hosts: dc
   become: true
   roles:
-    - lineadicomando.samba_ad_dc.samba_dc_build
+    - lineadicomando.samba_dc.samba_dc_build
 
 - name: Join Windows clients
   hosts: windows_clients
   roles:
-    - lineadicomando.samba_ad_dc.samba_win_join
+    - lineadicomando.samba_dc.samba_win_join
 ```
 
 Day-two operations are also available as dispatcher playbooks, callable by FQCN:
 
 ```bash
 # Create a user
-ansible-playbook lineadicomando.samba_ad_dc.samba \
+ansible-playbook lineadicomando.samba_dc.samba \
   -e '{"target_hosts":"dc","samba_tool_object":"user","samba_tool_action":"create",
        "samba_tool_args":{"name":"alice","password":"..."}}'
 
 # Back up the domain
-ansible-playbook lineadicomando.samba_ad_dc.samba_dc_backup \
+ansible-playbook lineadicomando.samba_dc.samba_dc_backup \
   -e '{"target_hosts":"dc","samba_dc_backup_action":"backup",
        "samba_dc_backup_targetdir":"/srv/samba-backup"}'
 ```
@@ -144,7 +144,7 @@ ansible-playbook lineadicomando.samba_ad_dc.samba_dc_backup \
 
 ```bash
 ansible-lint                     # profile: production
-ansible-test sanity --docker     # from within ansible_collections/lineadicomando/samba_ad_dc
+ansible-test sanity --docker     # from within ansible_collections/lineadicomando/samba_dc
 ansible-test units --docker
 ```
 

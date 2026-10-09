@@ -39,4 +39,4 @@
     owner: root
     group: root
     mode: "0644"
-  notify: samba_ad_dc reboot
+  notify: samba_dc reboot

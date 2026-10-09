@@ -37,26 +37,26 @@ an internal variable, not the public fact.
 - name: Report membership
   hosts: windows_clients
   roles:
-    - lineadicomando.samba_ad_dc.samba_win_status
+    - lineadicomando.samba_dc.samba_win_status
 
 - name: Act on the result
   hosts: windows_clients
   tasks:
     - import_role:
-        name: lineadicomando.samba_ad_dc.samba_win_status
+        name: lineadicomando.samba_dc.samba_win_status
       vars:
         samba_win_status_verbose: false
 
     - name: Join hosts that are not domain members yet
       import_role:
-        name: lineadicomando.samba_ad_dc.samba_win_join
+        name: lineadicomando.samba_dc.samba_win_join
       when: not samba_win_status.part_of_domain
 ```
 
 Or via the FQCN playbook shipped with the collection:
 
 ```bash
-ansible-playbook lineadicomando.samba_ad_dc.samba_win_status -e '{"target_hosts":"lab_win"}'
+ansible-playbook lineadicomando.samba_dc.samba_win_status -e '{"target_hosts":"lab_win"}'
 ```
 
 ## License

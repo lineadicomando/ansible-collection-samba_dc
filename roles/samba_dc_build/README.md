@@ -84,7 +84,7 @@ account is recreated against the new domain.
   hosts: dc
   become: true
   roles:
-    - lineadicomando.samba_ad_dc.samba_dc_build
+    - lineadicomando.samba_dc.samba_dc_build
 ```
 
 ```yaml

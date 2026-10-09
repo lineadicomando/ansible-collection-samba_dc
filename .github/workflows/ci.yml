@@ -8,7 +8,7 @@ on:
     branches: [main]
 
 env:
-  COLLECTION_PATH: ansible_collections/lineadicomando/samba_ad_dc
+  COLLECTION_PATH: ansible_collections/lineadicomando/samba_dc
 
 jobs:
   lint:

@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""MCP server exposing the lineadicomando.samba_ad_dc playbooks as tools."""
+"""MCP server exposing the lineadicomando.samba_dc playbooks as tools."""
 import asyncio
 
 from mcp.server import Server
@@ -15,7 +15,7 @@ from runner import (
     run_command,
 )
 
-app = Server("samba-ad-dc")
+app = Server("samba-dc")
 
 _LIMIT_SCHEMA = {
     "type": "string",
@@ -51,7 +51,7 @@ def _get_tools() -> list[Tool]:
             name="samba",
             description=(
                 "Manage the Samba AD Domain Controller via samba-tool, through the "
-                "lineadicomando.samba_ad_dc.samba playbook. "
+                "lineadicomando.samba_dc.samba playbook. "
                 "Objects: user, group, computer, ou, home, share. "
                 "Read-only actions (list, show, listmembers, listobjects) never change "
                 "state. Mutating user actions are idempotent. "
@@ -120,7 +120,7 @@ def _get_tools() -> list[Tool]:
             name="samba_dc_backup",
             description=(
                 "Backup and restore the Samba AD Domain Controller, through the "
-                "lineadicomando.samba_ad_dc.samba_dc_backup playbook. "
+                "lineadicomando.samba_dc.samba_dc_backup playbook. "
                 "Actions: backup (domain + user files), restore (domain, DESTRUCTIVE). "
                 "Backup always produces new archives and reports changed. "
                 "Restore rebuilds a DC from a backup archive — always run with "
@@ -158,7 +158,7 @@ def _get_tools() -> list[Tool]:
             name="samba_win_status",
             description=(
                 "Query the domain or workgroup membership status of Windows hosts, "
-                "through the lineadicomando.samba_ad_dc.samba_win_status playbook. "
+                "through the lineadicomando.samba_dc.samba_win_status playbook. "
                 "Read-only: never changes state. "
                 "Queries Win32_ComputerSystem via CIM and reports whether each host "
                 "is joined to an AD domain (and which one) or a workgroup (and which one). "

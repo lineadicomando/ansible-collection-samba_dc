@@ -156,7 +156,7 @@
   when: samba_dc_build_setup | bool
   args:
     creates: /etc/samba/smb.conf
-  notify: samba_ad_dc reboot
+  notify: samba_dc reboot
 
 - name: Set registry shares in smb.conf
   ansible.builtin.lineinfile:
@@ -175,7 +175,7 @@
     insertafter: '^\[global\]'
     regexp: '^\s*dns forwarder\s*='
     line: "\tdns forwarder = {{ samba_dc_build_dns_forwarder }}"
-  notify: samba_ad_dc reboot
+  notify: samba_dc reboot
 
 # libnss-winbind is installed above but is inert until nsswitch.conf routes
 # passwd/group lookups through it. Without this, domain accounts are invisible

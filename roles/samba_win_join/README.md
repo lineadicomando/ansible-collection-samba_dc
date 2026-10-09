@@ -44,7 +44,7 @@ ansible-vault encrypt_string --name samba_win_join_administrator_passwd '<passwo
 - name: Join Windows clients to domain
   hosts: windows_clients
   roles:
-    - lineadicomando.samba_ad_dc.samba_win_join
+    - lineadicomando.samba_dc.samba_win_join
 ```
 
 To remove a client from the domain:
@@ -53,7 +53,7 @@ To remove a client from the domain:
 - name: Remove Windows client from domain
   hosts: windows_clients
   roles:
-    - role: lineadicomando.samba_ad_dc.samba_win_join
+    - role: lineadicomando.samba_dc.samba_win_join
       vars:
         samba_win_join_state: workgroup
 ```

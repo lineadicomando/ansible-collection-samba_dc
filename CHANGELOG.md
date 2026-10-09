@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## v0.5.0 — 2026-10-09
 
 ### Added
 - Shared folders, compatible with the **Shared folders** tab of
@@ -20,6 +20,17 @@
   - `samba` MCP tool: `share` object.
 
 ### Breaking changes
+- The collection is renamed from `lineadicomando.samba_ad_dc` to
+  `lineadicomando.samba_dc`, and its repository to
+  `ansible-collection-samba_dc`. Roles, modules and playbooks keep their names,
+  so migrating means replacing the collection part of every FQCN
+  (`lineadicomando.samba_ad_dc.samba_tool` becomes
+  `lineadicomando.samba_dc.samba_tool`), pointing `requirements.yaml` at the new
+  repository and removing the old
+  `ansible_collections/lineadicomando/samba_ad_dc` directory. There is no
+  redirect from the old name.
+- The MCP server is renamed from `samba-ad-dc` to `samba-dc`: update the key in
+  `.mcp.json` and the path to `mcp/server.py`. Its tools keep their names.
 - The minimum supported ansible-core is now 2.19, declared consistently in
   `meta/runtime.yml`, the README and the CI matrix. 2.15 was claimed but never
   tested, and the matrix only exercised 2.16 and 2.18, both end of life.

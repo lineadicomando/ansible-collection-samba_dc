@@ -34,7 +34,7 @@
   when: samba_tool_action in ['list', 'show']
   block:
     - name: Read the shared folders
-      lineadicomando.samba_ad_dc.samba_share_info:
+      lineadicomando.samba_dc.samba_share_info:
         name: "{{ samba_tool_args.name if samba_tool_action == 'show' else omit }}"
         shares_dir: "{{ samba_tool_shares_dir }}"
         sam_ldb_path: "{{ samba_tool_sam_ldb_path }}"
@@ -90,7 +90,7 @@
       when: samba_tool_action in ['grant', 'revoke']
 
     - name: "Apply share {{ samba_tool_action ~ ' ' ~ samba_tool_args.name }}"
-      lineadicomando.samba_ad_dc.samba_share:
+      lineadicomando.samba_dc.samba_share:
         name: "{{ samba_tool_args.name }}"
         state: "{{ 'absent' if samba_tool_action in ['delete', 'absent'] else 'present' }}"
         access: "{{ _samba_tool_share_access if _samba_tool_share_access | length > 0 else omit }}"
