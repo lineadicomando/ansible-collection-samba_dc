@@ -13,6 +13,7 @@ from runner import (
     build_samba_win_status_command,
     format_command,
     run_command,
+    secret_values,
 )
 
 app = Server("samba-dc")
@@ -21,7 +22,8 @@ _LIMIT_SCHEMA = {
     "type": "string",
     "description": (
         "Ansible host pattern: a single host name or a group. "
-        "Passed to the playbook as target_hosts."
+        "Passed to the playbook as target_hosts. Left at 'all', the playbook "
+        "applies its own default group: samba_dc, or lab_win for samba_win_status."
     ),
     "default": "all",
 }
@@ -58,6 +60,8 @@ def _get_tools() -> list[Tool]:
                 "Destructive actions (delete, absent, disable, removemembers, revoke) "
                 "should be run with preview first to confirm with the user. "
                 "args.name is required for every action except list. "
+                "args.password is kept off the command line and masked in the run log "
+                "and in previews. "
                 "Common actions per object: "
                 "user [list, show, create, present, delete, absent, enable, disable, "
                 "setpassword, setprimarygroup]; "
@@ -140,7 +144,8 @@ def _get_tools() -> list[Tool]:
                             "Action-specific arguments (keys without the samba_dc_backup_ prefix). "
                             "backup: targetdir (required), domain (bool, default true), "
                             "domain_type (online|offline, default offline), domain_server, "
-                            "domain_username, domain_password (required with domain_username), "
+                            "domain_username, domain_password (required with domain_username; kept "
+                            "off the command line and masked in the run log), "
                             "files (bool, default true), files_paths (list, default [/home, /srv/samba]). "
                             "restore: restore_backup_file (required), restore_targetdir (required), "
                             "restore_newservername (required), restore_confirm=true (required)."
@@ -206,11 +211,13 @@ async def handle_call_tool(ctx: ServerRequestContext, params: CallToolRequestPar
     if cmd is None:
         return CallToolResult(content=[TextContent(type="text", text=f"Unknown tool: {name}")])
 
+    redact = secret_values(name, arguments.get("args"))
+
     if arguments.get("preview", False):
         return CallToolResult(content=[
             TextContent(
                 type="text",
-                text=f"Command to run:\n\n  {format_command(cmd)}\n\nNo command executed.",
+                text=f"Command to run:\n\n  {format_command(cmd, redact)}\n\nNo command executed.",
             )
         ])
 
@@ -219,7 +226,7 @@ async def handle_call_tool(ctx: ServerRequestContext, params: CallToolRequestPar
         for part in (name, arguments.get("object"), arguments.get("action"), arguments.get("l", "all"))
         if part
     )
-    output = await asyncio.to_thread(run_command, cmd, label)
+    output = await asyncio.to_thread(run_command, cmd, label, redact)
     return CallToolResult(content=[TextContent(type="text", text=output)])
 
 

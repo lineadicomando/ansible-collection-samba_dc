@@ -14,7 +14,7 @@ import json
 import os
 from pathlib import Path
 
-from runlog import run_logged
+from runlog import redactor, run_logged
 
 # Playbooks shipped by the collection, keyed by MCP tool name.
 PLAYBOOKS = {
@@ -24,6 +24,23 @@ PLAYBOOKS = {
 }
 
 DEFAULT_TIMEOUT = 900
+
+# Arguments that carry a secret, per tool. Their values never reach the command
+# line, the run log or a preview.
+SECRET_ARGS = {
+    "samba": ("password",),
+    "samba_dc_backup": ("domain_password",),
+}
+
+
+def secret_values(tool: str, args: dict | None) -> list[str]:
+    """The values of a call that must stay out of its log."""
+    secrets = []
+    for key in SECRET_ARGS.get(tool, ()):
+        value = (args or {}).get(key)
+        if value not in (None, ""):
+            secrets.append(str(value))
+    return secrets
 
 
 def _project_root() -> Path:
@@ -95,14 +112,17 @@ def build_samba_win_status_command(
     return _build_command("samba_win_status", {}, limit, inventory)
 
 
-def run_command(cmd: list[str], label: str = "samba") -> str:
+def run_command(cmd: list[str], label: str = "samba", redact: list[str] | None = None) -> str:
     """Run an ansible-playbook command, streaming its output to a log file.
+
+    With redact, the extra vars go to ansible-playbook through a private file
+    and the values listed are masked in the log and in the returned output.
 
     Bounded by ANSIBLE_MCP_TIMEOUT: a playbook waiting on a prompt would
     otherwise block the MCP server forever.
     """
     timeout = _timeout()
-    result = run_logged(cmd, _project_root(), label, timeout=timeout)
+    result = run_logged(cmd, _project_root(), label, timeout=timeout, redact=redact)
     output = result.output
     if result.timed_out:
         output += f"\n[timed out after {timeout}s and was terminated]"
@@ -111,7 +131,9 @@ def run_command(cmd: list[str], label: str = "samba") -> str:
     return f"{output}\n[log] {result.log_path}"
 
 
-def format_command(cmd: list[str]) -> str:
+def format_command(cmd: list[str], redact: list[str] | None = None) -> str:
+    hide = redactor(redact)
+    cmd = [hide(token) for token in cmd]
     parts = []
     i = 0
     while i < len(cmd):

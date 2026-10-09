@@ -37,6 +37,12 @@ playbook is still running, and repoints `<log dir>/latest.log` at it: a
 `tail -F logs/latest.log` shows what the tools are doing in real time. The log
 path is appended to every tool result. The newest 50 runs are kept.
 
+The log directory and the logs are readable by their owner only. A call that
+carries a secret — `args.password` of `samba`, `args.domain_password` of
+`samba_dc_backup` — hands its extra vars to `ansible-playbook` through a private
+temporary file instead of the command line, and the secret is masked in the log,
+in the tool result and in a `preview`.
+
 Without `ANSIBLE_MCP_INVENTORY`, the `inventory` argument of each tool selects
 `$ANSIBLE_PROJECT_ROOT/inventories/<inventory>/hosts.yaml`.
 
