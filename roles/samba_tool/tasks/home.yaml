@@ -50,9 +50,12 @@
         key: "{{ _samba_tool_home_username }}"
         fail_key: false
 
+    # winbind answers with the account as DOMAIN\name unless "winbind use
+    # default domain" is set, and getent keys its result by the name it got
+    # back: look for any entry instead of the bare name that was asked for.
     - name: Require the domain account to be resolvable by the OS
       ansible.builtin.assert:
-        that: ansible_facts.getent_passwd.get(_samba_tool_home_username) is not none
+        that: ansible_facts.getent_passwd.values() | select | list | length > 0
         fail_msg: >-
           '{{ _samba_tool_home_username }}' cannot be resolved through NSS, so the
           home directory cannot be owned by it. Make sure winbind is listed for
