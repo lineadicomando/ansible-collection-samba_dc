@@ -12,7 +12,7 @@ Full provisioning of a **Samba 4 Active Directory Domain Controller** on Debian 
 6. **Firewall** — configures nftables, opening only the ports required by AD (DNS, Kerberos, LDAP, RPC, SMB) plus SSH and Cockpit (9090)
 7. **Services** — enables `samba-ad-dc` and `cockpit`, configures chrony as authoritative NTP for the domain
 8. **Admin user** — creates/configures the AD administrator account
-9. **Cockpit plugin** — installs [cockpit-samba-ad-dc](https://github.com/lineadicomando/cockpit-samba-ad-dc) for browser-based domain management
+9. **Cockpit plugin** — installs [cockpit-samba-dc](https://github.com/lineadicomando/cockpit-samba-dc) for browser-based domain management
 
 Networking is configured **before** the domain is provisioned, and the address is
 passed explicitly to `samba-tool domain provision` (`--host-ip`): the provisioning
@@ -56,7 +56,7 @@ Host-specific variables are mandatory and must be defined in `host_vars/<hostnam
 | `samba_dc_build_firewall_cockpit_sources` | `[]` | Source networks allowed to reach Cockpit (empty = any) |
 | `samba_dc_build_cockpit_repo` | upstream URL | Git repository of the Cockpit plugin |
 | `samba_dc_build_cockpit_version` | `HEAD` | Git revision to build; pin it for reproducible builds |
-| `samba_dc_build_cockpit_src` | `/usr/local/src/cockpit-samba-ad-dc` | Working copy path for the plugin build |
+| `samba_dc_build_cockpit_src` | `/usr/local/src/cockpit-samba-dc` | Working copy path for the plugin build |
 
 ### The administrator password
 
@@ -107,7 +107,7 @@ samba_dc_build_administrator_passwd: !vault |
 
 ## Cockpit
 
-After provisioning, the management panel is available at `https://<dc-fqdn>:9090`. The [cockpit-samba-ad-dc](https://github.com/lineadicomando/cockpit-samba-ad-dc) plugin provides a graphical interface for managing AD users, groups, and services without using the CLI.
+After provisioning, the management panel is available at `https://<dc-fqdn>:9090`. The [cockpit-samba-dc](https://github.com/lineadicomando/cockpit-samba-dc) plugin provides a graphical interface for managing AD users, groups, and services without using the CLI.
 
 ## Tested platforms
 

@@ -42,5 +42,5 @@
 - name: Admin user
   ansible.builtin.import_tasks: admin_user.yaml
 
-- name: Cockpit samba-ad-dc UI
-  ansible.builtin.import_tasks: cockpit_samba-ad-dc.yaml
+- name: Cockpit samba-dc UI
+  ansible.builtin.import_tasks: cockpit_samba_dc.yaml

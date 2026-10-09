@@ -56,7 +56,7 @@ It runs **on the domain controller** and requires elevated privileges
 
 ## Home directories
 
-`object: home`, `action: provision` replicates what cockpit-samba-ad-dc does:
+`object: home`, `action: provision` replicates what cockpit-samba-dc does:
 it creates `<home_base>/<name>`, sets the `homeDrive` and `homeDirectory`
 attributes through `ldbmodify`, and ensures the SMB share exists.
 
@@ -76,7 +76,7 @@ with an explicit message when the lookup does not work.
 ## Shared folders
 
 `object: share` manages the same shared folders as the **Shared folders** tab of
-[cockpit-samba-ad-dc](https://github.com/lineadicomando/cockpit-samba-ad-dc):
+[cockpit-samba-dc](https://github.com/lineadicomando/cockpit-samba-dc):
 a share created here appears in Cockpit and vice versa.
 
 - Each folder is `<samba_tool_shares_dir>/<name>` (default

@@ -6,7 +6,7 @@ argument_specs:
     description:
       - Installs and provisions a Samba 4 Active Directory Domain Controller,
         configures Kerberos, static networking, DNS, an nftables firewall,
-        chrony as authoritative NTP source and the cockpit-samba-ad-dc web UI.
+        chrony as authoritative NTP source and the cockpit-samba-dc web UI.
       - All host-specific options are mandatory and are normally supplied from
         host_vars. The role fails explicitly when one is missing.
     options:
@@ -97,9 +97,9 @@ argument_specs:
         elements: str
         default: []
       samba_dc_build_cockpit_repo:
-        description: Git repository of the cockpit-samba-ad-dc plugin.
+        description: Git repository of the cockpit-samba-dc plugin.
         type: str
-        default: https://github.com/lineadicomando/cockpit-samba-ad-dc.git
+        default: https://github.com/lineadicomando/cockpit-samba-dc.git
       samba_dc_build_cockpit_version:
         description: Git revision to build. Pin to a tag or commit for reproducible builds.
         type: str
@@ -107,4 +107,4 @@ argument_specs:
       samba_dc_build_cockpit_src:
         description: Working copy path for the plugin build.
         type: path
-        default: /usr/local/src/cockpit-samba-ad-dc
+        default: /usr/local/src/cockpit-samba-dc

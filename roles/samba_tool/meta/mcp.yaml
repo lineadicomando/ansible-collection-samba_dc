@@ -57,7 +57,7 @@ objects:
   home:
     description: >-
       Home directory provisioning for a domain user. Replicates the logic of
-      cockpit-samba-ad-dc: creates the physical directory, sets homeDrive /
+      cockpit-samba-dc: creates the physical directory, sets homeDrive /
       homeDirectory LDAP attributes via ldbmodify, and ensures the SMB share.
     actions:
       provision:
@@ -75,7 +75,7 @@ objects:
   share:
     description: >-
       Shared folders for domain users and groups, in the model of
-      cockpit-samba-ad-dc: a registry share under /srv/samba/shares/<name>,
+      cockpit-samba-dc: a registry share under /srv/samba/shares/<name>,
       access enforced by valid users/read list and a POSIX ACL on the folder
       tree, optionally mapped as a network drive at logon through the
       "Cockpit - Mapped drives" GPO. Shares created here and in Cockpit are

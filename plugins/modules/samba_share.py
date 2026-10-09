@@ -13,7 +13,7 @@ description:
   - Create, update and delete folders shared with domain users and groups on a
     Samba 4 Active Directory Domain Controller, optionally mapped as a network
     drive at logon on Windows clients.
-  - Uses the same model as the cockpit-samba-ad-dc Cockpit plugin, so shares
+  - Uses the same model as the cockpit-samba-dc Cockpit plugin, so shares
     managed by this module and by the Cockpit UI are interchangeable. A shared
     folder is a registry share (C(net conf)) whose path is
     O(shares_dir)/O(name). Access is enforced by the share (C(valid users),
@@ -112,7 +112,7 @@ options:
   shares_dir:
     description:
       - Directory holding the shared folders. Must match the one used by
-        cockpit-samba-ad-dc for the two to manage the same shares.
+        cockpit-samba-dc for the two to manage the same shares.
     type: path
     default: /srv/samba/shares
   sam_ldb_path:

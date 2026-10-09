@@ -7,16 +7,16 @@
 
 Ansible collection that provisions a **Samba 4 Active Directory Domain Controller** on Debian Trixie and makes it manageable from a browser — no CLI required for day-to-day operations.
 
-After provisioning, open `https://<dc-fqdn>:9090` to access **[cockpit-samba-ad-dc](https://github.com/lineadicomando/cockpit-samba-ad-dc)**: a Cockpit plugin built specifically for this collection that lets you manage users, groups, DNS records and monitor Kerberos and Samba services directly from the web.
+After provisioning, open `https://<dc-fqdn>:9090` to access **[cockpit-samba-dc](https://github.com/lineadicomando/cockpit-samba-dc)**: a Cockpit plugin built specifically for this collection that lets you manage users, groups, DNS records and monitor Kerberos and Samba services directly from the web.
 
-![cockpit-samba-ad-dc screenshot](https://raw.githubusercontent.com/lineadicomando/cockpit-samba-ad-dc/main/docs/screenshot.png)
+![cockpit-samba-dc screenshot](https://raw.githubusercontent.com/lineadicomando/cockpit-samba-dc/main/docs/screenshot.png)
 
 ## What you get
 
 - A fully provisioned Samba 4 AD DC (realm, domain, Kerberos, DNS, NTP)
 - A hardened nftables firewall with only the ports required by AD
 - Chrony configured as authoritative NTP for domain clients
-- **[cockpit-samba-ad-dc](https://github.com/lineadicomando/cockpit-samba-ad-dc)** — browser UI for AD management on port 9090
+- **[cockpit-samba-dc](https://github.com/lineadicomando/cockpit-samba-dc)** — browser UI for AD management on port 9090
 - Idempotent day-two management of users, groups, computers, OUs, home directories and shared folders (interchangeable with the Cockpit UI, optionally mapped as network drives through a GPO)
 - Domain backup and restore
 - Roles for joining Windows (and soon Linux) clients to the domain
@@ -37,7 +37,7 @@ After provisioning, open `https://<dc-fqdn>:9090` to access **[cockpit-samba-ad-
 | Module | Purpose |
 |--------|---------|
 | `samba_tool_user` | Idempotent management of domain users (create, delete, enable/disable, password, primary group), with check mode and diff |
-| `samba_share` | Idempotent management of shared folders for domain users and groups (access, POSIX ACL, drive mapping through a GPO), with check mode and diff; same model as cockpit-samba-ad-dc |
+| `samba_share` | Idempotent management of shared folders for domain users and groups (access, POSIX ACL, drive mapping through a GPO), with check mode and diff; same model as cockpit-samba-dc |
 | `samba_share_info` | List shared folders with their access list and drive mapping |
 
 ## MCP service

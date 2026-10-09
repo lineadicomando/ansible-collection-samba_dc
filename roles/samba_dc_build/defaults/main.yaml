@@ -68,8 +68,8 @@ samba_dc_build_extra_packages:
 samba_dc_build_firewall_ssh_sources: []
 samba_dc_build_firewall_cockpit_sources: []
 
-# cockpit-samba-ad-dc web UI.
+# cockpit-samba-dc web UI.
 # Pin _version to a tag or commit for reproducible builds.
-samba_dc_build_cockpit_repo: https://github.com/lineadicomando/cockpit-samba-ad-dc.git
+samba_dc_build_cockpit_repo: https://github.com/lineadicomando/cockpit-samba-dc.git
 samba_dc_build_cockpit_version: HEAD
-samba_dc_build_cockpit_src: /usr/local/src/cockpit-samba-ad-dc
+samba_dc_build_cockpit_src: /usr/local/src/cockpit-samba-dc

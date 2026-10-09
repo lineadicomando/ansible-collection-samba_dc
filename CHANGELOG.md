@@ -4,7 +4,7 @@
 
 ### Added
 - Shared folders, compatible with the **Shared folders** tab of
-  cockpit-samba-ad-dc: the same folders under `/srv/samba/shares`, the same
+  cockpit-samba-dc: the same folders under `/srv/samba/shares`, the same
   registry shares and POSIX ACL, and the same **Cockpit - Mapped drives** GPO for
   mapping a share as a network drive at logon. A share created from Ansible
   shows up in Cockpit and vice versa.
@@ -31,11 +31,21 @@
   redirect from the old name.
 - The MCP server is renamed from `samba-ad-dc` to `samba-dc`: update the key in
   `.mcp.json` and the path to `mcp/server.py`. Its tools keep their names.
+- `samba_dc_build` follows the Cockpit plugin to its new name,
+  cockpit-samba-dc: `samba_dc_build_cockpit_repo` and
+  `samba_dc_build_cockpit_src` default to the new repository and to
+  `/usr/local/src/cockpit-samba-dc`. On a domain controller built by an earlier
+  release the role removes the plugin installed as
+  `/usr/share/cockpit/samba-ad-dc` and its old working copy, so the Cockpit menu
+  does not end up with two entries.
 - The minimum supported ansible-core is now 2.19, declared consistently in
   `meta/runtime.yml`, the README and the CI matrix. 2.15 was claimed but never
   tested, and the matrix only exercised 2.16 and 2.18, both end of life.
 
 ### Fixed
+- `samba_dc_build`: the Cockpit plugin was rebuilt on every run. The role
+  looked for it under `/usr/share/cockpit/samba-ad-dc` while the plugin, since
+  its rename, installs itself as `/usr/share/cockpit/samba-dc`.
 - `ansible-test` assumed the modules had to run on every Python version the
   running ansible-core supports as a target, which on ansible-core 2.16 still
   includes Python 2.7 and 3.6. `samba_tool_user` uses

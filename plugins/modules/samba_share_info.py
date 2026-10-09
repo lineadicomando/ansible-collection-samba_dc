@@ -11,7 +11,7 @@ short_description: List the shared folders of a Samba AD DC
 version_added: "0.5.0"
 description:
   - Returns the shared folders managed with the
-    M(lineadicomando.samba_dc.samba_share) module or the cockpit-samba-ad-dc
+    M(lineadicomando.samba_dc.samba_share) module or the cockpit-samba-dc
     Cockpit plugin, that is the registry shares whose path lies under
     O(shares_dir), with their access list and drive mapping.
   - Runs on the domain controller itself and requires elevated privileges

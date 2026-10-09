@@ -5,4 +5,4 @@ exclude_paths:
   - .ansible/ # locally installed copy of this collection
 
 skip_list:
-  - latest[git]  # cockpit-samba-ad-dc is intentionally pulled from main branch
+  - latest[git]  # cockpit-samba-dc is intentionally pulled from main branch

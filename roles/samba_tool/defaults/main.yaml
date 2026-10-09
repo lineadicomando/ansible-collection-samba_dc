@@ -22,7 +22,7 @@ samba_tool_home_share_params:
   - {param: directory mask, value: "0700"}
 
 # Directory holding the shared folders (object: share). Must match the one
-# used by cockpit-samba-ad-dc for the two to manage the same shares.
+# used by cockpit-samba-dc for the two to manage the same shares.
 samba_tool_shares_dir: /srv/samba/shares
 
 # When true, hide the output of tasks that may contain passwords.

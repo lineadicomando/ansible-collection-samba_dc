@@ -26,7 +26,7 @@ from ansible_collections.lineadicomando.samba_dc.plugins.module_utils.samba_shar
 )
 from ansible_collections.lineadicomando.samba_dc.plugins.modules.samba_share import merge_access
 
-# The fixture of cockpit-samba-ad-dc test/shares.test.ts: both sides must read
+# The fixture of cockpit-samba-dc test/shares.test.ts: both sides must read
 # the same registry the same way.
 NET_CONF = "\n".join([
     "[home]",
@@ -169,7 +169,7 @@ def test_escape_ldap_filter():
 
 # --- POSIX ACL -------------------------------------------------------------------
 
-# `getfacl -n -p -c -E` of a share root as written by cockpit-samba-ad-dc.
+# `getfacl -n -p -c -E` of a share root as written by cockpit-samba-dc.
 GETFACL = """\
 user::rwx
 user:3000025:r-x

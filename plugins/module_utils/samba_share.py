@@ -2,9 +2,9 @@
 # GNU General Public License v3.0+
 # (see https://www.gnu.org/licenses/gpl-3.0.txt)
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""Shared folders on a Samba AD DC, compatible with cockpit-samba-ad-dc.
+"""Shared folders on a Samba AD DC, compatible with cockpit-samba-dc.
 
-The on-disk and in-directory model is the one cockpit-samba-ad-dc uses
+The on-disk and in-directory model is the one cockpit-samba-dc uses
 (src/lib/shares.ts and src/lib/drivemaps.ts), so that a share created here
 shows up in the Cockpit UI and vice versa:
 

@@ -52,7 +52,7 @@ argument_specs:
       samba_tool_shares_dir:
         description:
           - Directory holding the shared folders managed by O(samba_tool_object=share).
-          - Must match the one used by cockpit-samba-ad-dc for the two to manage
+          - Must match the one used by cockpit-samba-dc for the two to manage
             the same shares.
         type: path
         default: /srv/samba/shares

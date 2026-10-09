@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 ---
-# Shared folders, in the model of cockpit-samba-ad-dc: a registry share under
+# Shared folders, in the model of cockpit-samba-dc: a registry share under
 # samba_tool_shares_dir, a POSIX ACL on the folder tree and an optional drive
 # mapping through the "Cockpit - Mapped drives" GPO (see the samba_share module).
 #   read-only : list, show           -> samba_share_info

@@ -73,7 +73,7 @@ def _get_tools() -> list[Tool]:
                 "home_group (default Domain Users). "
                 "share [list, show, create, present, grant, revoke, delete, absent] — "
                 "folders shared with domain users and groups, interchangeable with the "
-                "Shared folders tab of cockpit-samba-ad-dc: /srv/samba/shares/<name>, "
+                "Shared folders tab of cockpit-samba-dc: /srv/samba/shares/<name>, "
                 "access enforced by the share and a POSIX ACL, optionally mapped as a "
                 "network drive at logon through a GPO. "
                 "share args: name (required except list); access, a list of "
