@@ -90,6 +90,22 @@ Read-only actions (`list`, `show`, `listmembers`, `listobjects`) never change st
 ansible-galaxy collection install lineadicomando.samba_dc
 ```
 
+### Coming from `lineadicomando.samba_ad_dc`
+
+Up to 0.4.0 the collection was called `lineadicomando.samba_ad_dc`. There is no
+redirect from the old name:
+
+- replace `lineadicomando.samba_ad_dc.` with `lineadicomando.samba_dc.` in the
+  FQCN of roles, modules and playbooks; their own names did not change
+- point `requirements.yaml` at `ansible-collection-samba_dc` and remove the
+  installed `ansible_collections/lineadicomando/samba_ad_dc`
+- in the MCP client configuration the server is `samba-dc` and its script lives
+  under the new repository path
+- the Cockpit plugin is now `cockpit-samba-dc`: the next `samba_dc_build` run
+  installs it under `/usr/share/cockpit/samba-dc` and removes the former one.
+  A `samba_dc_build_cockpit_repo` or `samba_dc_build_cockpit_src` set in the
+  inventory still points at the old name and has to be updated
+
 ## Inventory example
 
 ```yaml
