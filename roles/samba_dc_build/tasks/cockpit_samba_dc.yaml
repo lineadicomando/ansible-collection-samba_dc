@@ -52,13 +52,22 @@
 
 # The plugin was called cockpit-samba-ad-dc until collection 0.4.0. Left in
 # place, the old install shows up as a second entry in the Cockpit menu.
+# Only once the new one is there: samba_dc_build_cockpit_version pinned to a
+# revision from before the rename still installs under the former name, and
+# removing that would leave the DC with no plugin at all.
+- name: Check that the plugin is installed under its current name
+  ansible.builtin.stat:
+    path: /usr/share/cockpit/samba-dc
+  register: samba_dc_build_cockpit_current
+
 - name: Remove the plugin installed under its former name
   ansible.builtin.file:
     path: /usr/share/cockpit/samba-ad-dc
     state: absent
+  when: samba_dc_build_cockpit_current.stat.exists
 
 - name: Remove the working copy of the plugin under its former name
   ansible.builtin.file:
     path: /usr/local/src/cockpit-samba-ad-dc
     state: absent
-  when: samba_dc_build_cockpit_src != '/usr/local/src/cockpit-samba-ad-dc'
+  when: samba_dc_build_cockpit_src | regex_replace('/+$', '') != '/usr/local/src/cockpit-samba-ad-dc'
