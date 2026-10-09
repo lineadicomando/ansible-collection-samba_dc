@@ -46,6 +46,10 @@
 - `samba_dc_build`: the Cockpit plugin was rebuilt on every run. The role
   looked for it under `/usr/share/cockpit/samba-ad-dc` while the plugin, since
   its rename, installs itself as `/usr/share/cockpit/samba-dc`.
+- `samba_dc_build`: a second run failed on the Cockpit plugin with "Local
+  modifications exist in the destination". `npm install` rewrote
+  `package-lock.json` in the working copy; the role now runs `npm ci`, which
+  leaves it alone.
 - `ansible-test` assumed the modules had to run on every Python version the
   running ansible-core supports as a target, which on ansible-core 2.16 still
   includes Python 2.7 and 3.6. `samba_tool_user` uses

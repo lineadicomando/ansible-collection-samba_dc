@@ -32,9 +32,11 @@
     path: /usr/share/cockpit/samba-dc
   register: samba_dc_build_cockpit_installed
 
+# npm ci, not npm install: the latter rewrites package-lock.json, and the next
+# run then fails on a working copy with local modifications.
 - name: Install npm dependencies
   ansible.builtin.command:
-    cmd: npm install
+    cmd: npm ci
     chdir: "{{ samba_dc_build_cockpit_src }}"
   when: samba_dc_build_cockpit_clone.changed or not samba_dc_build_cockpit_installed.stat.exists
   changed_when: true
