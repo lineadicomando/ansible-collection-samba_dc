@@ -7,10 +7,10 @@
 #     -e '{"target_hosts":"samba_dc","samba_dc_backup_action":"backup",
 #          "samba_dc_backup_targetdir":"/srv/backups"}'
 #
-# target_hosts: limit execution to specific hosts/groups (default: all)
+# target_hosts: limit execution to specific hosts/groups (default: samba_dc)
 
 - name: Samba DC backup/restore dispatcher
-  hosts: "{{ target_hosts | default('all') }}"
+  hosts: "{{ target_hosts | default('samba_dc') }}"
   become: true
   gather_facts: true
   tasks:
