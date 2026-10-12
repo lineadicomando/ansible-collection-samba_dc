@@ -56,7 +56,7 @@ an internal variable, not the public fact.
 Or via the FQCN playbook shipped with the collection:
 
 ```bash
-ansible-playbook lineadicomando.samba_dc.samba_win_status -e '{"target_hosts":"lab_win"}'
+ansible-playbook lineadicomando.samba_dc.samba_win_status -e '{"target_hosts":"win_managed"}'
 ```
 
 ## License

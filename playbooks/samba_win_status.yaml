@@ -4,12 +4,12 @@
 # Invokable by FQCN: ansible-playbook lineadicomando.samba_dc.samba_win_status
 #
 #   ansible-playbook lineadicomando.samba_dc.samba_win_status \
-#     -e '{"target_hosts":"lab_win"}'
+#     -e '{"target_hosts":"win_managed"}'
 #
-# target_hosts: limit execution to specific hosts/groups (default: lab_win)
+# target_hosts: limit execution to specific hosts/groups (default: win_managed, or lab_win where the inventory still has only the old name)
 
 - name: Windows domain/workgroup membership status
-  hosts: "{{ target_hosts | default('lab_win') }}"
+  hosts: "{{ target_hosts | default('win_managed' if 'win_managed' in groups else 'lab_win') }}"
   gather_facts: false
   tasks:
     - name: Run samba_win_status

@@ -23,7 +23,7 @@ _LIMIT_SCHEMA = {
     "description": (
         "Ansible host pattern: a single host name or a group. "
         "Passed to the playbook as target_hosts. Left at 'all', the playbook "
-        "applies its own default group: samba_dc, or lab_win for samba_win_status."
+        "applies its own default group: samba_dc, or win_managed for samba_win_status."
     ),
     "default": "all",
 }
@@ -167,7 +167,7 @@ def _get_tools() -> list[Tool]:
                 "Read-only: never changes state. "
                 "Queries Win32_ComputerSystem via CIM and reports whether each host "
                 "is joined to an AD domain (and which one) or a workgroup (and which one). "
-                "Targets lab_win by default (all Windows hosts in the lab)."
+                "Targets win_managed by default (the managed Windows PCs), or lab_win in an inventory that still has only the old name."
             ),
             inputSchema={
                 "type": "object",
