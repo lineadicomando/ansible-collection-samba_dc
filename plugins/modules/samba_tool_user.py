@@ -145,7 +145,7 @@ EXAMPLES = r"""
 - name: Set primary group of an existing user
   lineadicomando.samba_dc.samba_tool_user:
     name: alice
-    primary_group: Studenti
+    primary_group: Staff
   become: true
 """
 

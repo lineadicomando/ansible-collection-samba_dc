@@ -135,20 +135,20 @@ notes:
 """
 
 EXAMPLES = r"""
-- name: Share a folder, read-write for teachers and read-only for students
+- name: Share a folder, read-write for staff and read-only for every domain user
   lineadicomando.samba_dc.samba_share:
-    name: Materiali
-    comment: Class materials
+    name: Projects
+    comment: Project files
     access:
-      - {name: Teachers, level: write}
-      - {name: Students, level: read}
-    drive_letter: M
-    drive_label: Materiali
+      - {name: Staff, level: write}
+      - {name: Domain Users, level: read}
+    drive_letter: P
+    drive_label: Projects
   become: true
 
 - name: Give one more user write access, keeping the others
   lineadicomando.samba_dc.samba_share:
-    name: Materiali
+    name: Projects
     access_mode: append
     access:
       - {name: mrossi, level: write}
@@ -156,13 +156,13 @@ EXAMPLES = r"""
 
 - name: Stop mapping the share as a drive
   lineadicomando.samba_dc.samba_share:
-    name: Materiali
+    name: Projects
     drive_letter: ""
   become: true
 
 - name: Delete the share and its data
   lineadicomando.samba_dc.samba_share:
-    name: Materiali
+    name: Projects
     state: absent
     delete_data: true
   become: true
@@ -194,20 +194,20 @@ share:
       description: Drive mapping (C(letter), C(label)), or null.
       type: dict
   sample:
-    name: Materiali
-    path: /srv/samba/shares/Materiali
-    comment: Class materials
+    name: Projects
+    path: /srv/samba/shares/Projects
+    comment: Project files
     browseable: true
     access:
-      - {name: Teachers, kind: group, level: write}
-      - {name: Students, kind: group, level: read}
-    drive: {letter: M, label: Materiali}
+      - {name: Staff, kind: group, level: write}
+      - {name: Domain Users, kind: group, level: read}
+    drive: {letter: P, label: Projects}
 commands:
   description: The commands that were run (or would be, in check mode).
   type: list
   elements: str
   returned: always
-  sample: ["net conf addshare Materiali /srv/samba/shares/Materiali writeable=y guest_ok=n"]
+  sample: ["net conf addshare Projects /srv/samba/shares/Projects writeable=y guest_ok=n"]
 """
 
 import os

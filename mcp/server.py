@@ -10,7 +10,6 @@ from mcp.types import TextContent, Tool, CallToolResult, ListToolsResult, Pagina
 from runner import (
     build_backup_command,
     build_samba_command,
-    build_samba_win_status_command,
     format_command,
     run_command,
     secret_values,
@@ -23,7 +22,7 @@ _LIMIT_SCHEMA = {
     "description": (
         "Ansible host pattern: a single host name or a group. "
         "Passed to the playbook as target_hosts. Left at 'all', the playbook "
-        "applies its own default group: samba_dc, or win_managed for samba_win_status."
+        "applies its own default group, samba_dc."
     ),
     "default": "all",
 }
@@ -31,10 +30,10 @@ _LIMIT_SCHEMA = {
 _INVENTORY_SCHEMA = {
     "type": "string",
     "description": (
-        "Inventory name under inventories/, unless ANSIBLE_MCP_INVENTORY "
-        "points at an explicit inventory file."
+        "Inventory name under inventories/. Optional when the server sets "
+        "ANSIBLE_MCP_DEFAULT_INVENTORY (the name used when omitted), ignored "
+        "when ANSIBLE_MCP_INVENTORY points at an explicit inventory file."
     ),
-    "default": "school",
 }
 
 _PREVIEW_SCHEMA = {
@@ -108,8 +107,8 @@ def _get_tools() -> list[Tool]:
                             "{\"name\": \"alice\", \"password\": \"...\"} or "
                             "{\"name\": \"staff\", \"members\": [\"alice\", \"bob\"]} or "
                             "{\"name\": \"alice\", \"home_base\": \"/srv/samba/home\"} or "
-                            "{\"name\": \"Materiali\", \"write\": [\"Teachers\"], "
-                            "\"read\": [\"Students\"], \"drive_letter\": \"M\"}."
+                            "{\"name\": \"Projects\", \"write\": [\"Staff\"], "
+                            "\"read\": [\"Domain Users\"], \"drive_letter\": \"P\"}."
                         ),
                         "default": {},
                     },
@@ -159,33 +158,13 @@ def _get_tools() -> list[Tool]:
                 "required": ["action"],
             },
         ),
-        Tool(
-            name="samba_win_status",
-            description=(
-                "Query the domain or workgroup membership status of Windows hosts, "
-                "through the lineadicomando.samba_dc.samba_win_status playbook. "
-                "Read-only: never changes state. "
-                "Queries Win32_ComputerSystem via CIM and reports whether each host "
-                "is joined to an AD domain (and which one) or a workgroup (and which one). "
-                "Targets win_managed by default (the managed Windows PCs), or lab_win in an inventory that still has only the old name."
-            ),
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "l": _LIMIT_SCHEMA,
-                    "inventory": _INVENTORY_SCHEMA,
-                    "preview": _PREVIEW_SCHEMA,
-                },
-                "required": [],
-            },
-        ),
     ]
 
 
 def _command_for(name: str, arguments: dict) -> list[str] | None:
     """Translate an MCP tool call into an ansible-playbook command line."""
     limit = arguments.get("l", "all")
-    inventory = arguments.get("inventory", "school")
+    inventory = arguments.get("inventory")
     args = arguments.get("args") or {}
 
     if name == "samba":
@@ -194,8 +173,6 @@ def _command_for(name: str, arguments: dict) -> list[str] | None:
         )
     if name == "samba_dc_backup":
         return build_backup_command(arguments["action"], args or None, limit, inventory)
-    if name == "samba_win_status":
-        return build_samba_win_status_command(limit, inventory)
     return None
 
 
@@ -207,7 +184,10 @@ async def handle_call_tool(ctx: ServerRequestContext, params: CallToolRequestPar
     name = params.name
     arguments = params.arguments or {}
 
-    cmd = _command_for(name, arguments)
+    try:
+        cmd = _command_for(name, arguments)
+    except ValueError as e:
+        return CallToolResult(content=[TextContent(type="text", text=str(e))], isError=True)
     if cmd is None:
         return CallToolResult(content=[TextContent(type="text", text=f"Unknown tool: {name}")])
 

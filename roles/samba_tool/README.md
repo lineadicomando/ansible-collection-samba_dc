@@ -152,18 +152,18 @@ existing share; an existing drive mapping follows access list changes.
 ```
 
 ```yaml
-# Share a folder: read-write for teachers, read-only for students, drive M:
+# Share a folder: read-write for staff, read-only for every domain user, drive P:
 - import_role:
     name: lineadicomando.samba_dc.samba_tool
   vars:
     samba_tool_object: share
     samba_tool_action: create
     samba_tool_args:
-      name: Materiali
-      comment: Class materials
-      write: [Teachers]
-      read: [Students]
-      drive_letter: M
+      name: Projects
+      comment: Project files
+      write: [Staff]
+      read: ["Domain Users"]
+      drive_letter: P
 ```
 
 Or via the FQCN playbook shipped with the collection:

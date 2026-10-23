@@ -44,7 +44,7 @@ EXAMPLES = r"""
 
 - name: Read one share
   lineadicomando.samba_dc.samba_share_info:
-    name: Materiali
+    name: Projects
   become: true
   register: result
 """
@@ -76,14 +76,14 @@ shares:
       description: Drive mapping (C(letter), C(label)), or null when the share is not mapped.
       type: dict
   sample:
-    - name: Materiali
-      path: /srv/samba/shares/Materiali
-      comment: Class materials
+    - name: Projects
+      path: /srv/samba/shares/Projects
+      comment: Project files
       browseable: true
       access:
-        - {name: Teachers, kind: group, level: write}
-        - {name: Students, kind: group, level: read}
-      drive: {letter: M, label: Materiali}
+        - {name: Staff, kind: group, level: write}
+        - {name: Domain Users, kind: group, level: read}
+      drive: {letter: P, label: Projects}
 """
 
 from ansible.module_utils.basic import AnsibleModule

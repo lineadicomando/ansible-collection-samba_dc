@@ -9,7 +9,6 @@ to `ansible-playbook` by hand.
 |------|----------|-----------------|
 | `samba` | `lineadicomando.samba_dc.samba` | users, groups, computers, OUs, home directories, shared folders |
 | `samba_dc_backup` | `lineadicomando.samba_dc.samba_dc_backup` | domain backup (online/offline) and destructive restore |
-| `samba_win_status` | `lineadicomando.samba_dc.samba_win_status` | domain/workgroup membership of Windows hosts (read-only) |
 
 Every tool accepts `preview: true`, which returns the `ansible-playbook` command
 line without running it. Use it before any destructive action.
@@ -29,6 +28,7 @@ The collection itself must be installed (or reachable through
 |----------|----------|---------|
 | `ANSIBLE_PROJECT_ROOT` | yes | directory the playbooks are run from |
 | `ANSIBLE_MCP_INVENTORY` | no | explicit inventory file; overrides the layout below |
+| `ANSIBLE_MCP_DEFAULT_INVENTORY` | no | inventory name used when a call gives none |
 | `ANSIBLE_MCP_TIMEOUT` | no | per-run timeout in seconds (default `900`) |
 | `ANSIBLE_MCP_LOG_DIR` | no | per-run log directory (default `$ANSIBLE_PROJECT_ROOT/logs`) |
 
@@ -44,7 +44,9 @@ temporary file instead of the command line, and the secret is masked in the log,
 in the tool result and in a `preview`.
 
 Without `ANSIBLE_MCP_INVENTORY`, the `inventory` argument of each tool selects
-`$ANSIBLE_PROJECT_ROOT/inventories/<inventory>/hosts.yaml`.
+`$ANSIBLE_PROJECT_ROOT/inventories/<inventory>/hosts.yaml`; when it is
+omitted, `ANSIBLE_MCP_DEFAULT_INVENTORY` names it, and with neither the call
+fails asking for one.
 
 ## Client configuration
 

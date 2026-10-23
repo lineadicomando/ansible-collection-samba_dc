@@ -7,7 +7,8 @@ authors:
 description: >
   Provision a Samba 4 Active Directory Domain Controller on Debian Trixie and
   manage it through a browser. The collection installs cockpit-samba-dc, a
-  Cockpit plugin that exposes AD users, groups, DNS and service controls at
+  Cockpit plugin that manages users, groups, computers, home directories and
+  shared folders at
   https://<dc>:9090 — no CLI required for day-to-day operations.
 license:
   - GPL-3.0-or-later
@@ -25,8 +26,6 @@ issues: https://github.com/lineadicomando/ansible-collection-samba_dc/issues
 
 dependencies:
   community.general: ">=7.0.0"
-  microsoft.ad: ">=1.0.0"
-  ansible.windows: ">=2.0.0"
 
 # Keep local build artefacts and the locally installed copy of this collection
 # out of the published tarball.

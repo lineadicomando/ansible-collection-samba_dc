@@ -5,6 +5,9 @@ Configuration comes from the environment:
   ANSIBLE_PROJECT_ROOT  (required) directory the playbooks are run from
   ANSIBLE_MCP_INVENTORY (optional) explicit inventory path; when unset the
                         layout <root>/inventories/<name>/hosts.yaml is used
+  ANSIBLE_MCP_DEFAULT_INVENTORY (optional) the <name> used when a call gives
+                        none; without it, and without ANSIBLE_MCP_INVENTORY,
+                        every call must name its inventory
   ANSIBLE_MCP_TIMEOUT   (optional) per-run timeout in seconds, default 900
   ANSIBLE_MCP_LOG_DIR   (optional) log directory, default <root>/logs
 """
@@ -20,7 +23,6 @@ from runlog import redactor, run_logged
 PLAYBOOKS = {
     "samba": "lineadicomando.samba_dc.samba",
     "samba_dc_backup": "lineadicomando.samba_dc.samba_dc_backup",
-    "samba_win_status": "lineadicomando.samba_dc.samba_win_status",
 }
 
 DEFAULT_TIMEOUT = 900
@@ -57,18 +59,26 @@ def _timeout() -> int:
         return DEFAULT_TIMEOUT
 
 
-def _inventory_path(inventory: str) -> str:
+def _inventory_path(inventory: str | None) -> str:
     override = os.environ.get("ANSIBLE_MCP_INVENTORY")
     if override:
         return override
-    return str(_project_root() / "inventories" / inventory / "hosts.yaml")
+    name = inventory or os.environ.get("ANSIBLE_MCP_DEFAULT_INVENTORY")
+    if not name:
+        raise ValueError(
+            "No inventory: pass 'inventory', or set ANSIBLE_MCP_INVENTORY or "
+            "ANSIBLE_MCP_DEFAULT_INVENTORY in the server's environment"
+        )
+    if "/" in name or name.startswith("."):
+        raise ValueError(f"Invalid inventory name: {name!r}")
+    return str(_project_root() / "inventories" / name / "hosts.yaml")
 
 
 def _build_command(
     tool: str,
     extra: dict,
     limit: str = "all",
-    inventory: str = "school",
+    inventory: str | None = None,
 ) -> list[str]:
     cmd = ["ansible-playbook", PLAYBOOKS[tool], "-i", _inventory_path(inventory)]
     # The playbooks take their host pattern from target_hosts rather than from
@@ -85,7 +95,7 @@ def build_samba_command(
     action: str,
     args: dict | None = None,
     limit: str = "all",
-    inventory: str = "school",
+    inventory: str | None = None,
 ) -> list[str]:
     extra: dict = {"samba_tool_object": object_, "samba_tool_action": action}
     if args:
@@ -97,19 +107,12 @@ def build_backup_command(
     action: str,
     args: dict | None = None,
     limit: str = "all",
-    inventory: str = "school",
+    inventory: str | None = None,
 ) -> list[str]:
     extra: dict = {"samba_dc_backup_action": action}
     for key, value in (args or {}).items():
         extra[f"samba_dc_backup_{key}"] = value
     return _build_command("samba_dc_backup", extra, limit, inventory)
-
-
-def build_samba_win_status_command(
-    limit: str = "all",
-    inventory: str = "school",
-) -> list[str]:
-    return _build_command("samba_win_status", {}, limit, inventory)
 
 
 def run_command(cmd: list[str], label: str = "samba", redact: list[str] | None = None) -> str:
