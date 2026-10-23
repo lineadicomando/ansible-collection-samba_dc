@@ -1,5 +1,18 @@
 # lineadicomando.samba_dc
 
+> **Moved.** From 0.8.0 the collection lives in the
+> [`ansible/`](https://github.com/lineadicomando/cockpit-samba-dc/tree/main/ansible)
+> directory of [cockpit-samba-dc](https://github.com/lineadicomando/cockpit-samba-dc),
+> released with the Cockpit page under one version. This repository is no
+> longer updated; 0.7.0 is its last release. Install the collection from there:
+>
+> ```yaml
+> collections:
+>   - name: git+https://github.com/lineadicomando/cockpit-samba-dc.git#/ansible/
+>     type: git
+>     version: v0.8.0
+> ```
+
 [![GitHub tag](https://img.shields.io/github/v/tag/lineadicomando/ansible-collection-samba_dc?label=version)](https://github.com/lineadicomando/ansible-collection-samba_dc/tags)
 [![License: GPL v3](https://img.shields.io/badge/license-GPLv3-blue)](./LICENSE)
 [![CI](https://github.com/lineadicomando/ansible-collection-samba_dc/actions/workflows/ci.yml/badge.svg)](https://github.com/lineadicomando/ansible-collection-samba_dc/actions/workflows/ci.yml)
